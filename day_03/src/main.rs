@@ -6,25 +6,31 @@ use ferris_says::say;
 fn main() {
     let map = read_input();
 
-    let trees_hit = count_trees(map, 3);
+    let right_1_down_1 = count_trees(&map, 1, 1);
+    let right_5_down_1 = count_trees(&map, 5, 1);
+    let right_7_down_1 = count_trees(&map, 7, 1);
+    let right_1_down_2 = count_trees(&map, 1, 2);
+    let right_3_down_1 = count_trees(&map, 3, 1);
 
-    announce_answer(trees_hit.to_string())
+    let product = right_1_down_1 * right_3_down_1 * right_5_down_1 * right_7_down_1 * right_1_down_2;
+
+    announce_answer(product.to_string())
 }
 
-fn count_trees(map: Vec<String>, right: usize) -> i32 {
+fn count_trees(map: &Vec<String>, right: usize, down: usize) -> i64 {
     let distance = map.len();
     let map_width = map[0].chars().count();
-    let mut x_coord :usize = 0;
+    let mut x_coord = 0;
 
     let mut trees_hit = 0;
 
-    for row in 1..distance {
-        x_coord = (x_coord + right) % map_width;
-
+    for row in (0..distance).step_by(down) {
         let char = map[row].chars().nth(x_coord).unwrap();
         if char == '#' {
             trees_hit += 1;
         }
+
+        x_coord = (x_coord + right) % map_width;
     }
 
     trees_hit
@@ -54,16 +60,10 @@ mod tests {
     #[test]
     fn test_count_trees() {
         let map = vec!["..##.......".to_string(), "#...#...#..".to_string(), ".#....#..#.".to_string(), "..#.#...#.#".to_string(), ".#...##..#.".to_string(), "..#.##.....".to_string(), ".#.#.#....#".to_string(), ".#........#".to_string(), "#.##...#...".to_string(), "#...##....#".to_string(), ".#..#...#.#".to_string()];
-        let count = count_trees(map, 3);
-        assert_eq!(7, count);
-    }
-
-    #[test]
-    fn test_modulo() {
-        assert_eq!(0, 2 % 1);
-        assert_eq!(1, 3 % 2);
-        assert_eq!(0, 0 % 3);
-
-        assert_eq!(3, 7 % 4);
+        assert_eq!(2, count_trees(&map, 1, 1));
+        assert_eq!(7, count_trees(&map, 3, 1));
+        assert_eq!(3, count_trees(&map, 5, 1));
+        assert_eq!(4, count_trees(&map, 7, 1));
+        assert_eq!(2, count_trees(&map, 1, 2));
     }
 }
