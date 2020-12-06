@@ -19,8 +19,6 @@ struct Passport {
 
 impl Passport {
     pub fn is_valid_1(&self) -> bool {
-        // let expected_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"];
-
         let optional_field = "cid";
 
         if self.passport_fields.len() > 7 {
