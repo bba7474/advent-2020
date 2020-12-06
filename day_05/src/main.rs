@@ -4,15 +4,29 @@ use std::io::{BufWriter, stdout};
 use ferris_says::say;
 
 use crate::plane_seat::{get_plane_seat_id};
+use std::cmp::min;
 
 mod plane_seat;
 
 fn main() {
-    let answer = read_input().iter()
+    let mut seat_ids = read_input().iter()
         .map(|s| get_plane_seat_id(s))
-        .max().unwrap();
+        .collect::<Vec<i32>>();
 
-    announce_answer(answer.to_string());
+    seat_ids.sort();
+
+    let pairs = seat_ids.windows(2);
+
+    let mut seat_id = 0;
+
+    for pair in pairs.into_iter() {
+        if (pair[0] - pair[1]).abs() > 1 {
+            seat_id = min(pair[0], pair[1]) + 1;
+            break;
+        }
+    }
+
+    announce_answer(seat_id.to_string());
 }
 
 fn read_input() -> Vec<String> {
