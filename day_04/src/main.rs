@@ -3,7 +3,7 @@ use std::io::{BufWriter, stdout};
 
 use ferris_says::say;
 
-use crate::passport::{is_valid_passport_1};
+use crate::passport::{is_valid_passport_1, is_valid_passport_2};
 
 mod passport;
 
@@ -15,6 +15,12 @@ fn main() {
         .count();
 
     announce_answer(count_valid_passports_1.to_string());
+
+    let count_valid_passports_2 = input.iter()
+        .filter(|passport| is_valid_passport_2(passport))
+        .count();
+
+    announce_answer(count_valid_passports_2.to_string());
 }
 
 fn read_input() -> Vec<String> {
