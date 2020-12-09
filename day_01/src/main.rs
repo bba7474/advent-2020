@@ -59,4 +59,11 @@ mod tests {
         assert_eq!(0, product);
     }
 
+    #[test]
+    fn test_itertools() {
+        let x = vec![1, 2, 3];
+        let product = iproduct!(x.iter().cloned(), x.iter().cloned());
+        product.for_each(|x| println!("{:?}", x));
+    }
+
 }
