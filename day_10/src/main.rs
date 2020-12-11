@@ -1,6 +1,7 @@
-use ferris_says::say;
 use std::fs;
 use std::io::{BufWriter, stdout};
+
+use ferris_says::say;
 
 fn main() {
     let mut input = read_input();
