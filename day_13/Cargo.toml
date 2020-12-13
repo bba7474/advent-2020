@@ -8,4 +8,4 @@ edition = "2018"
 
 [dependencies]
 ferris-says = "0.2"
-
+itertools = "0.9.0"
